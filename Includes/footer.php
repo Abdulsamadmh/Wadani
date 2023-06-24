@@ -24,9 +24,12 @@
 	<script src="assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 	<!--app JS-->
 	<script>
-		$(document).ready(function() {
-			$('#example').DataTable();
-		  } );
+		
+		$(document).ready( function () {
+    $('#example').DataTable( {
+    	responsive: true
+    } );
+} );
 	</script>
 	<script>
 		$(document).ready(function() {

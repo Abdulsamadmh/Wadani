@@ -1,41 +1,4 @@
-	<!--sidebar wrapper -->
-		<div class="sidebar-wrapper" data-simplebar="true">
-			<div class="sidebar-header">
-				<div>
-					<img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-				</div>
-				<div>
-					<h4 class="logo-text">Rocker</h4>
-				</div>
-				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-				</div>
-			</div>
-			<!--navigation-->
-			<ul class="metismenu" id="menu">
-				<li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="bx bx-category"></i>
-						</div>
-						<div class="menu-title">Application</div>
-					</a>
-					<ul>
-						<li> <a href="Blank.php"><i class="bx bx-right-arrow-alt"></i>Blank</a>
-						</li>
-						<li> <a href="rms.php"><i class="bx bx-right-arrow-alt"></i>RMS</a>
-						</li>
-						<li> <a href="Lock.php"><i class="bx bx-right-arrow-alt"></i>Lock Screen</a>
-						</li>
-						
-						
-					</ul>
-				</li>
-				
-			</ul>
-			<!--end navigation-->
-		</div>
-		<!--end sidebar wrapper -->
-		<!--start header -->
-		<header>
+<header>
 			<div class="topbar d-flex align-items-center">
 				<nav class="navbar navbar-expand">
 					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
@@ -52,39 +15,14 @@
 								<a class="nav-link" href="#">	<i class='bx bx-search'></i>
 								</a>
 							</li>
-						
-							<li class="nav-item dropdown dropdown-large">
-								
-								<div class="dropdown-menu dropdown-menu-end">
-									
-									<div class="header-notifications-list">
-									</div>
-								
-								</div>
-							</li>
-							<li class="nav-item dropdown dropdown-large">
-								
-								<div class="dropdown-menu dropdown-menu-end">
-									
-									<div class="header-message-list">
-										
-									
-									
-									
-										
-									
-										
-									</div>
-									
-								</div>
-							</li>
+							
 						</ul>
 					</div>
 					<div class="user-box dropdown">
 						<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
 							<div class="user-info ps-3">
-								<p class="user-name mb-0"><?php echo $_SESSION["Name"] ?></p>
+								<p class="user-name mb-0"><?php echo $_SESSION["Name"]  ?></p>
 								<p class="designattion mb-0"><?php echo $_SESSION["Username"]?></p>
 							</div>
 						</a>
@@ -109,4 +47,3 @@
 				</nav>
 			</div>
 		</header>
-		<!--end header -->
