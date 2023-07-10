@@ -119,7 +119,7 @@ if($row['STATUS']==1)
 else
 {
 	?>
-	<a href="Entery.php?id=<?php echo $row['ID']; ?>"><button type="button" class="btn btn-outline-info px-5 radius-30">View</button></a>
+	<a href="view.php?id=<?php echo $row['ID']; ?>"><button type="button" class="btn btn-outline-info px-5 radius-30">View</button></a>
 	<?php
 }
 									?>

@@ -1,0 +1,5 @@
+DirectoryIndex Index.php
+RewriteEngine On
+ErrorDocument 404 "<center><br> <br><br><b><h1><b>404</b></h1><h1>WADDANI NATIONAL PARTY</h1><h2>PAGE NOT FOUND !!! </h2> </center> "
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]

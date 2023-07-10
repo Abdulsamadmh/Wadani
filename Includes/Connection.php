@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database="rms";   
+$database="rmsdatabase";   
 
 // Create connection
 $conn = new mysqli($servername, $username, $password,$database);
