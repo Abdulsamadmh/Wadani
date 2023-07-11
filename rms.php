@@ -1,7 +1,8 @@
 <!doctype html>
+
 <?php
-session_start();
-if(!$_SESSION["Username"])
+require('session.php');
+if(!$_SESSION['ID'])
 {
 	header("Location:login.php");
 }
@@ -32,7 +33,7 @@ if(!$_SESSION["Username"])
 	<link rel="stylesheet" href="assets/css/dark-theme.css" />
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
-	<title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
+	<title>Result Management System</title>
 </head>
 
 <body>
@@ -54,84 +55,105 @@ include_once('./includes/subheader.php')
 			<div class="page-content">
 				
 				<h6 class="mb-0 text-uppercase">Polling stations assigned to <div class="chip chip-md bg-light text-dark">
-							<img src="assets/images/avatars/avatar-2.png" alt="Contact Person"><?php echo $_SESSION["Name"] ?></div></h6>
+							<img src="assets/images/avatars/avatar-2.png" alt="Contact Person"><?php echo $_SESSION['FULLNAME'] ?></div></h6>
 				<hr/>
 				<div class="card">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table id="example" class="table table-striped table-bordered" style="width:100%">
-								<thead>
-									<tr>
-										<th>Region</th>
-										<th>District </th>
-										<th>PSN</th>
-										<th>Polling Station</th>
-										<th>Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-							
-									<?php
- require('./Includes/Connection.php');
-$user=$_SESSION['Username'];
-        $stmt1=$conn->prepare("SELECT B.DATE,A.ID,A.REGION,A.DESTRICT,A.ps,A.psN,A.VOTERS,B.STATUS,B.WADDANI,B.UCID,B.KULMIYE,B.T_TOTAL,B.T_INVALID,B.T_DISPUTED,users.FIRSTNAME,users.MIDDLENAME,users.LASTNAME,users.phoneNumber,B.ASSIGNED FROM ps AS A JOIN rms AS B ON B.psN=A.ID JOIN users ON B.ASSIGNED=users.ID WHERE users.PhoneNumber = ? ");
-        $stmt1->bind_param("s", $user);
-		$stmt1->execute();
+					 
+                  <h5> <i class="fas fa-sympol"></i> Tasks Assigned</h5><hr>
+                  <table class="table table-sm table-bordered table-striped" id="example2">
+                    <thead>
+                      <tr>
+                      <th>NO</th>
+                        <th>REGION</th>
+                        <th>STATION</th>
+						<th>STATUS</th>
+                        <th>WADDANI</th>
+                        <th>KULMIYE</th>
+                        <Th>UCID</Th>
+                        <Th>RECEIVED</Th>
+                        <th>USED</th>
+                        <th>CORUPTED</th>
+                        <th>DISPUTED</th>
+                        <th>ACTION</th>
+                      </tr>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                    <th>NO</th>
+                        <th>REGION</th>
+                        <th>STATION</th>
+						<th>STATUS</th>
+                        <th>WADDANI</th>
+                        <th>KULMIYE</th>
+                        <Th>UCID</Th>
+                        <Th>RECEIVED</Th>
+                        <th>USED</th>
+                        <th>CORUPTED</th>
+                        <th>DISPUTED</th>
+                        <th>ACTION</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                    
+                    <?php
+        require('Includes/Connection.php');
+        $user=$_SESSION['ID'];
+        $stmt1=$conn->prepare("SELECT  B.ID,a.REGION,a.DiSTRICT,A.POLLING_CENTER_NO,B.PS_ID,A.POLLING_CENTER_NAME,A.VALID_VOTERS,B.WADDANI,B.KULMIYE,B.UCID,b.STATUS,PRP.RECEIVED,PRP.USED,PRP.CORUPTED,PRP.DISPUTED
+        FROM PS AS A  JOIN pr_rms   AS B 
+        ON B.PS_ID=A.ID
+         JOIN users ON B.ASSIGNED_TO=users.ID 
+         JOIN pr_polling_papers PRP
+         on PRP.REF=B.ID WHERE users.ID=? ");
+         $stmt1->bind_param("s",$user);
+        $stmt1->execute();
         $result = $stmt1->get_result();
 
-while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+       
+          ?>
+          <Tr>
+            <td><?php echo $row['POLLING_CENTER_NO'];?></td>
+            <td><span class="text-primary font-weight-bold"><?php echo $row['REGION'];?></span>-<?php echo $row['DiSTRICT'];?></td>
+            <td><?php echo $row['POLLING_CENTER_NAME'];?> <?php $status=$row['STATUS']; if ($status==2){ echo ' <span class="float-right">Done <i class="fas fa-check-circle   text-success" title="done"></i></span>';} elseif($status==1){echo  ' <span class="float-right">Started <i class="fas fa-info-circle  text-warning" title="started"></i></span>';}else{echo ' <span class="float-right">Stuck <i class="text-primary" data-feather="alert-circle"></i></span>';}?></td>
+            <td>
+<?php
+$status=$row['STATUS']; 
 
-?>
-								
-									<tr>
-										
-										<td><?php echo $row['REGION']; ?></td>
-										<td><?php echo $row['DESTRICT']; ?></td>
-										<td><?php echo $row['psN']; ?></td>
-										<td><?php echo $row["ps"]; ?></td>
-                                        
-										<td>
-
-										 <?php
-              if ($row['STATUS']==1){
-               echo"<span class='badge bg-gradient-blooker text-white shadow-sm w-75'>"."Started"."</span>";
-              }elseif($row['STATUS']==2){
-                echo"<span class='badge bg-gradient-quepal text-white shadow-sm w-75'>"."Finished"."</span>";
-              }elseif($row['STATUS']==3){
-				 echo"<span class='badge bg-gradient-bloody text-white shadow-sm w-75'>"."Cancelled"."</span>";
-			  }
-			  else
-			  {
-				echo"<span class='badge bg-gradient-bloody text-white shadow-sm w-75'>"."Not Started"."</span>";
-			  }
-			  ?>
-										</td>
-										<td>
-                                          <div class="col">
-											<?php
-if($row['STATUS']==1)
+if($status==2)
 {
-											?>
-										<a href="Entery.php?id=<?php echo $row['ID']; ?>"><button type="button" class="btn btn-outline-info px-5 radius-30">Edit</button></a>
-									<?php
+echo '<div class="font-18 text-success">	<i class="fadeIn animated bx bx-comment-check"></i>
+						Done	</div>';
+}
+elseif($status==1)
+{
+echo '<div class="font-18 text-info">	<i class="fadeIn animated bx bx-x-circle"></i>
+							Started</div>';
 }
 else
 {
-	?>
-	<a href="view.php?id=<?php echo $row['ID']; ?>"><button type="button" class="btn btn-outline-info px-5 radius-30">View</button></a>
-	<?php
+	echo '<div class="font-18 text-danger">	<i class="fadeIn animated bx bx-x-circle"></i>
+							Stuck</div>';
 }
-									?>
-									</div>
-                                        </td>
-										
-									</tr>
-									
-									<?php }?>
 
-								</tbody>
-							</table>
+?>
+
+
+			</td>
+			<td><?php echo $row['WADDANI'];?></td>
+            <td><?php echo $row['KULMIYE'];?></td>
+            <td><?php echo $row['UCID'];?></td>
+            <td><?php echo $row['RECEIVED'];?></td>
+            <td><?php echo $row['USED'];?></td>
+            <td><?php echo $row['CORUPTED'];?></td>
+            <td><?php echo $row['DISPUTED'];?></td>
+            <tD> <a class="btn btn-success w-100 btn-sm" href="Edit?id=<?php echo $row['ID'];?>">Open <i class="fas fa-cog"></i></a></tD>
+          </Tr>
+           <?php }?>
+                      
+                    </tbody>
+                  </table>
 						</div>
 					</div>
 				</div>
