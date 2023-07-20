@@ -94,11 +94,11 @@ require('./Includes/Connection.php');
 								<form class="row g-3" method="POST">
 <div class="col-md-6">
 <label for="inputFirstName" class="form-label">Received</label>
-										<input type="email" class="form-control" id="inputFirstName">
+										<input type="text" name="papers" class="form-control" id="inputFirstName">
 									</div>
 									<div class="col-md-6">
 										<label for="inputLastName" class="form-label">Used</label>
-										<input type="password" class="form-control" id="inputLastName">
+										<input type="text"  name="" class="form-control" id="inputLastName">
 									</div>
 									<div class="col-md-6">
 										<label for="inputEmail" class="form-label">Corrupted</label>
